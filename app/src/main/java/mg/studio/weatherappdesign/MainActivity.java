@@ -32,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
     private class DownloadUpdate extends AsyncTask<String, Void, String> {
         @Override
         protected String doInBackground(String... strings) {
-            String stringUrl = "http://mpianatra.com/Courses/info.txt";
+            String stringUrl = "http://api.openweathermap.org/data/2.5/forecast?lat=35&lon=139&APPID=230f54f3fc70fa7efda8d4b4e265b37e";
             HttpURLConnection urlConnection = null;
             BufferedReader reader;
             try {
@@ -54,7 +54,9 @@ public class MainActivity extends AppCompatActivity {
                 String line;
                 while ((line = reader.readLine()) != null) {
                     // Mainly needed for debugging
-                    buffer.append(line + "\n");
+                    String linel = line.substring(line.indexOf("temp")+6);
+                    String temp = String.valueOf((int)(Double.valueOf(linel.substring(0, linel.indexOf(","))) - 273.15));
+                    buffer.append(temp + "\n");
                 }
 
                 if (buffer.length() == 0) {
