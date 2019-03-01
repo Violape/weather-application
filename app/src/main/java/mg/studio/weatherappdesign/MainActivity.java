@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
     private class DownloadUpdate extends AsyncTask<String, Void, String> {
         @Override
         protected String doInBackground(String... strings) {
-            String stringUrl = "http://api.openweathermap.org/data/2.5/forecast?lat=35&lon=139&APPID=230f54f3fc70fa7efda8d4b4e265b37e";
+            String stringUrl = "http://api.openweathermap.org/data/2.5/forecast?lat=35&lon=139&appid=230f54f3fc70fa7efda8d4b4e265b37e&lang=zh_cn&units=metric";
             HttpURLConnection urlConnection = null;
             BufferedReader reader;
             try {
@@ -56,19 +56,37 @@ public class MainActivity extends AppCompatActivity {
 
                 String line;
                 while ((line = reader.readLine()) != null) {
-                    // Mainly needed for debugging
-                    String linel = line.substring(line.indexOf("temp")+6);
-                    String temp = String.valueOf((int)(Double.valueOf(linel.substring(0, linel.indexOf(","))) - 273.15));
-                    buffer.append(temp + "\n");
+                    String[] temp = new String[5];
+                    String[] weat = new String[5];
+                    String[] date = new String[5];
+                    String loca = "Unknown Location";
+                    String linel = line;
+                    for(int i=0; i<5; i++){
+                        linel = linel.substring(linel.indexOf("temp") + 6);
+                        temp[i] = String.valueOf((int)(Double.valueOf(linel.substring(0, linel.indexOf(","))) + 0.5));
+                        linel = linel.substring(linel.indexOf("main") + 7);
+                        weat[i] = linel.substring(0, linel.indexOf('"'));
+                        linel = linel.substring(linel.indexOf("dt_txt") + 9);
+                        date[i] = linel.substring(0, 10);
+                        for(int j=0; j<7; j++)
+                            linel = linel.substring(linel.indexOf("dt_txt") + 9);
+                    }
+                    linel = linel.substring(linel.indexOf("name") + 7);
+                    loca = linel.substring(0, linel.indexOf('"'));
+                    linel = linel.substring(linel.indexOf("country") + 10);
+                    loca += "," + linel.substring(0, linel.indexOf('"'));
+                    String result = "";
+                    for(int i=0; i<5; i++)
+                        result += date[i] + "," + weat[i] + "," + temp[i] + ",";
+                    result += loca;
+                    buffer.append(result+"\n");
                 }
-
                 if (buffer.length() == 0) {
                     // Stream was empty.  No point in parsing.
                     return null;
                 }
                 //The temperature
                 return buffer.toString();
-
             } catch (MalformedURLException e) {
                 e.printStackTrace();
             } catch (ProtocolException e) {
@@ -80,9 +98,9 @@ public class MainActivity extends AppCompatActivity {
         }
 
         @Override
-        protected void onPostExecute(String temperature) {
+        protected void onPostExecute(String msg) {
             //Update the temperature displayed
-            ((TextView) findViewById(R.id.temperature_of_the_day)).setText(temperature);
+            String[] items = msg.split(",");
         }
     }
 }
