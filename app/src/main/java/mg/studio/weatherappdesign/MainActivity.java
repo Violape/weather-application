@@ -30,20 +30,15 @@ public class MainActivity extends AppCompatActivity {
 
 
     private class DownloadUpdate extends AsyncTask<String, Void, String> {
-
-
         @Override
         protected String doInBackground(String... strings) {
             String stringUrl = "http://mpianatra.com/Courses/info.txt";
             HttpURLConnection urlConnection = null;
             BufferedReader reader;
-
             try {
                 URL url = new URL(stringUrl);
-
                 // Create the request to get the information from the server, and open the connection
                 urlConnection = (HttpURLConnection) url.openConnection();
-
                 urlConnection.setRequestMethod("GET");
                 urlConnection.connect();
 
@@ -76,7 +71,6 @@ public class MainActivity extends AppCompatActivity {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-
             return null;
         }
 
