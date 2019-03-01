@@ -101,6 +101,9 @@ public class MainActivity extends AppCompatActivity {
         protected void onPostExecute(String msg) {
             //Update the temperature displayed
             String[] items = msg.split(",");
+            ((TextView) findViewById(R.id.tv_date)).setText(items[0]);
+            ((TextView) findViewById(R.id.temperature_of_the_day)).setText(items[2]);
+            ((TextView) findViewById(R.id.tv_location)).setText(items[15]+", "+items[16]);
         }
     }
 }
