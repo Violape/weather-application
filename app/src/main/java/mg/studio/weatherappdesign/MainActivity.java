@@ -16,7 +16,11 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
-
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
+import java.text.SimpleDateFormat;
+import java.text.ParseException;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -102,14 +106,21 @@ public class MainActivity extends AppCompatActivity {
         protected void onPostExecute(String msg) {
             //Update the temperature displayed
             String[] items = msg.split(",");
+            String[] weeklong = {"","SUNDAY","MONDAY","TUESDAY","WEDNESDAY","THURSDAY","FRIDAY","SATURDAY"};
+            String[] weekshort = {"","SUN","MON","TUE","WED","THU","FRI","SAT"};
+            ((TextView) findViewById(R.id.today)).setText(weeklong[getDayofWeek(items[0])]);
             checkWeatherBitmap(items[1], R.id.img_weather_condition);
             ((TextView) findViewById(R.id.tv_location)).setText(items[15]+", "+items[16]);
             ((TextView) findViewById(R.id.tv_date)).setText(items[0]);
             ((TextView) findViewById(R.id.temperature_of_the_day)).setText(items[2]);
             checkWeatherBitmap(items[4], R.id.img_weather_condition2);
+            ((TextView) findViewById(R.id.day2)).setText(weekshort[getDayofWeek(items[3])]);
             checkWeatherBitmap(items[7], R.id.img_weather_condition3);
+            ((TextView) findViewById(R.id.day3)).setText(weekshort[getDayofWeek(items[6])]);
             checkWeatherBitmap(items[10], R.id.img_weather_condition4);
+            ((TextView) findViewById(R.id.day4)).setText(weekshort[getDayofWeek(items[9])]);
             checkWeatherBitmap(items[13], R.id.img_weather_condition5);
+            ((TextView) findViewById(R.id.day5)).setText(weekshort[getDayofWeek(items[12])]);
         }
 
         protected void checkWeatherBitmap(String msg, int targetid){
@@ -121,6 +132,26 @@ public class MainActivity extends AppCompatActivity {
                 ((ImageView)findViewById(targetid)).setImageResource(R.drawable.rainy_small);
             else
                 ((ImageView)findViewById(targetid)).setImageResource(R.drawable.notification);
+        }
+
+        private int getDayofWeek(String dateTime) {
+            Calendar cal = Calendar.getInstance();
+            if (dateTime.equals("")) {
+                cal.setTime(new Date(System.currentTimeMillis()));
+            } else {
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+                Date date;
+                try {
+                    date = sdf.parse(dateTime);
+                } catch (ParseException e) {
+                    date = null;
+                    e.printStackTrace();
+                }
+                if (date != null) {
+                    cal.setTime(new Date(date.getTime()));
+                }
+            }
+            return cal.get(Calendar.DAY_OF_WEEK);
         }
     }
 }
