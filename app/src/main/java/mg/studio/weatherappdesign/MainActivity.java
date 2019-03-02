@@ -106,8 +106,8 @@ public class MainActivity extends AppCompatActivity {
         protected void onPostExecute(String msg) {
             //Update the temperature displayed
             String[] items = msg.split(",");
-            String[] weeklong = {"","SUNDAY","MONDAY","TUESDAY","WEDNESDAY","THURSDAY","FRIDAY","SATURDAY"};
-            String[] weekshort = {"","SUN","MON","TUE","WED","THU","FRI","SAT"};
+            String[] weeklong = {"SUNDAY","MONDAY","TUESDAY","WEDNESDAY","THURSDAY","FRIDAY","SATURDAY"};
+            String[] weekshort = {"SUN","MON","TUE","WED","THU","FRI","SAT"};
             ((TextView) findViewById(R.id.today)).setText(weeklong[getDayofWeek(items[0])]);
             checkWeatherBitmap(items[1], R.id.img_weather_condition);
             ((TextView) findViewById(R.id.tv_location)).setText(items[15]+", "+items[16]);
@@ -151,7 +151,7 @@ public class MainActivity extends AppCompatActivity {
                     cal.setTime(new Date(date.getTime()));
                 }
             }
-            return cal.get(Calendar.DAY_OF_WEEK);
+            return cal.get(Calendar.DAY_OF_WEEK)-1;
         }
     }
 }
