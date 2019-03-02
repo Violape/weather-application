@@ -171,6 +171,7 @@
             android:orientation="vertical">
 
             <ImageView
+                android:id="@+id/img_weather_condition2"
                 android:layout_width="48dp"
                 android:layout_height="48dp"
                 app:srcCompat="@drawable/rainy_small" />
@@ -192,6 +193,7 @@
             android:orientation="vertical">
 
             <ImageView
+                android:id="@+id/img_weather_condition3"
                 android:layout_width="48dp"
                 android:layout_height="48dp"
                 app:srcCompat="@drawable/partly_sunny_small" />
@@ -213,6 +215,7 @@
             android:orientation="vertical">
 
             <ImageView
+                android:id="@+id/img_weather_condition4"
                 android:layout_width="48dp"
                 android:layout_height="48dp"
                 app:srcCompat="@drawable/windy_small" />
@@ -234,6 +237,7 @@
             android:orientation="vertical">
 
             <ImageView
+                android:id="@+id/img_weather_condition5"
                 android:layout_width="48dp"
                 android:layout_height="48dp"
                 app:srcCompat="@drawable/sunny_small" />

@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import java.io.BufferedReader;
@@ -101,9 +102,25 @@ public class MainActivity extends AppCompatActivity {
         protected void onPostExecute(String msg) {
             //Update the temperature displayed
             String[] items = msg.split(",");
+            checkWeatherBitmap(items[1], R.id.img_weather_condition);
+            ((TextView) findViewById(R.id.tv_location)).setText(items[15]+", "+items[16]);
             ((TextView) findViewById(R.id.tv_date)).setText(items[0]);
             ((TextView) findViewById(R.id.temperature_of_the_day)).setText(items[2]);
-            ((TextView) findViewById(R.id.tv_location)).setText(items[15]+", "+items[16]);
+            checkWeatherBitmap(items[4], R.id.img_weather_condition2);
+            checkWeatherBitmap(items[7], R.id.img_weather_condition3);
+            checkWeatherBitmap(items[10], R.id.img_weather_condition4);
+            checkWeatherBitmap(items[13], R.id.img_weather_condition5);
+        }
+
+        protected void checkWeatherBitmap(String msg, int targetid){
+            if (msg.equals("Clear"))
+                ((ImageView)findViewById(targetid)).setImageResource(R.drawable.sunny_small);
+            else if (msg.equals("Clouds"))
+                ((ImageView)findViewById(targetid)).setImageResource(R.drawable.partly_sunny_small);
+            else if (msg.equals("Rain"))
+                ((ImageView)findViewById(targetid)).setImageResource(R.drawable.rainy_small);
+            else
+                ((ImageView)findViewById(targetid)).setImageResource(R.drawable.notification);
         }
     }
 }
