@@ -36,11 +36,10 @@ public class MainActivity extends AppCompatActivity {
         Toast.makeText(MainActivity.this, "Update Complete!", Toast.LENGTH_SHORT).show();
     }
 
-
     private class DownloadUpdate extends AsyncTask<String, Void, String> {
         @Override
         protected String doInBackground(String... strings) {
-            String stringUrl = "http://api.openweathermap.org/data/2.5/forecast?lat=35&lon=139&appid=230f54f3fc70fa7efda8d4b4e265b37e&lang=zh_cn&units=metric";
+            String stringUrl = "http://api.openweathermap.org/data/2.5/forecast?lat=32&lon=121&appid=230f54f3fc70fa7efda8d4b4e265b37e&lang=zh_cn&units=metric";
             HttpURLConnection urlConnection = null;
             BufferedReader reader;
             try {
